@@ -6,10 +6,10 @@ const bcrypt = require('bcrypt');
 
 
 app.set('view engine', 'ejs')
-
+app.use(express.static('public'));
 
 // db
-const mongoURI = 'mongodb+srv://nvega94:Spring120894@cluster1.f9h0s.mongodb.net/testSessions?retryWrites=true&w=majority'
+const mongoURI = process.env.MONGO_URI
 const mongoose = require('mongoose');
 
 async function mongooseConnection(URI) {
@@ -42,11 +42,11 @@ const isAuth = (req, res, next) => {
         return next();
     }
 
-    return res.redirect('/');
+    return res.redirect('login');
 }
 
 app.use(session({
-    secret: 'super secret key',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store: store,
@@ -61,7 +61,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // routes
 
-app.get('/', (req, res) => {
+app.get('/', isAuth, (req, res) => {
     res.render('index');
 });
 
@@ -73,7 +73,7 @@ app.get('/login', (req, res) => {
 app.post('/login', async (req, res) => {
     const {email, password} = req.body;
     const user = await UserModel.findOne({email});
-    if(!user) return res.redirect('login');
+    if(!user || user.active === false) return res.redirect('login');
     const isMatch = await bcrypt.compare(password, user.password);
 
     if(!isMatch) return res.redirect('login');
