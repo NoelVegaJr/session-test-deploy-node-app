@@ -8,17 +8,45 @@
     <title>Home</title>
 </head>
 <body>
+    <div class="scene">
+        <div class="card"> 
+            <form action="/login" method="POST" class="form__face--front form-face">
+                <div class="img-box">
+                    <img class="user-login" src="images/user-login.png">
+                </div>
+                <input type="email" id="email" name="email" placeholder="Email">
+                <input type="password" id="password" name="password" placeholder="Password">
+                <button class="btn-sign-in" type="submit">Sign in</button>
+                <a class="register form-link" href="#">Register</a>
+            </form>
+            <form action="/register" method="POST" class="form__face--back form-face">
+                <div class="img-box">
+                    <img class="user-login" src="images/user-login.png">
+                </div>
+                <input type="text"  name="username" placeholder="Username" required/>
+                <input type="email"  name="email" placeholder="Email" required/>
+                <input type="password"  name="password" placeholder="Password" required/>
+                <button class="btn-sign-in" type="submit">Register</button>
+                <a class="login form-link" href="#">Login</a>
+            </form>
+        </div> 
+    </div>
 
-        <form action="/login" method="POST" class="login-form">
-            <div class="img-box">
-                <img class="user-login" src="images/user-login.png">
-            </div>
-            <input type="email" id="email" name="email" placeholder="Email">
-            <input type="password" id="password" name="password" placeholder="Password">
-            <button class="btn-sign-in" type="submit">Sign in</button>
-            <a class="register" href="register">Register</a>
-            
-        </form>
+
+<script>
+    const form = document.querySelector('.card');
+
+    const registerLink = document.querySelector('.register');
+    registerLink.addEventListener('click', () => {
+       form.classList.toggle('flip');
+    })
+
+    const loginLink = document.querySelector('.login');
+    loginLink.addEventListener('click', () => {
+       form.classList.toggle('flip');
+       console.log('login link clicked')
+    })
+</script>
 
 </body>
 </html>
