@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const PORT = 5500;
+const port = 5500;
 const bodyParser = require('body-parser')
 const bcrypt = require('bcrypt');
 
@@ -116,6 +116,6 @@ app.post('/logout', (req, res) => {
 
 
 
-app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`);
+app.listen(process.env.PORT || port, () => {
+    console.log(`Listening on port ${port}`);
 });
