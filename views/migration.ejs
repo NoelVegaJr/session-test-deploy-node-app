@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/user.css"/>
+    <link rel="stylesheet" href="/css/migration.css"/>
+    <title><%= migration %></title>
+</head>
+<body>
+    <nav>
+        <form action="/logout" method="post">
+            <button class="logout" type="submit">Logout</button>
+        </form>
+    </nav>
+    <section class="section-sub-nav">
+        <div class="container">
+            <div class="bread-crumb">
+                <a href="/<%= username %>"><%= username %></a> / <a class="active-crumb" href="#"><%= migration %></a>
+            </div>
+            <div class="sub-nav">
+                <div class="cell"></div>
+                <ul class="sub-nav-list">
+                    <li class="sub-link active"><a href="#">Dashboard</a></li>
+                    <li class="sub-link"><a href="#">Reporting</a></li>
+                    <li class="sub-link"><a href="#">Kanban</a></li>
+                    <li class="sub-link"><a href="#">Documentation</a></li>
+                    <li class="sub-link"><a href="#">SOW</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+
+    
+</body>
+</html>

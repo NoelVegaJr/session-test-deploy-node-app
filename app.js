@@ -84,7 +84,7 @@ app.post('/login', async (req, res) => {
 
     req.session.isAuth = true;
     req.session.username = user.username;
-
+    console.log(`${user.username} logged in`)
     res.redirect('/'+user.username);
 });
 
@@ -103,7 +103,7 @@ app.post('/register', async (req, res) => {
         password: await bcrypt.hash(password, 12)
     });
     await user.save();
-
+    console.log(`New user created "${username}" and is waiting for approval.`)
     
     res.redirect('login');
 });
@@ -116,6 +116,7 @@ app.get('/dashboard', isAuth, (req, res) => {
 });
 
 app.post('/logout', (req, res) => {
+    console.log(req.session.username + " logged out.");
     req.session.destroy(err => {
         if(err) console.log(err);
         res.redirect('/');
@@ -128,6 +129,14 @@ app.get('/:user', isAuth, async (req, res) => {
     if(req.params.user !== username ) return res.sendStatus(401);
     const user = await UserModel.findOne({username});
     res.render('user', {migrations: user.migrations, username: username});
+});
+
+app.get('/:user/:migration', isAuth, async (req, res) => {
+    
+    const username = req.session.username;
+    const migration = req.params.migration;
+    if(req.params.user !== username ) return res.sendStatus(401);
+    res.render('migration', {migration: migration, username: username});
 });
 
 

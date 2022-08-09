@@ -1,0 +1,34 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+.bread-crumb {
+    font-size: 2.4rem;
+}
+
+.bread-crumb a {
+    color: #0969da;
+}
+
+.bread-crumb a:hover {
+    color: #0969da;
+    text-decoration: underline;
+}
+
+.bread-crumb a:last-child {
+    font-weight: bold;
+}

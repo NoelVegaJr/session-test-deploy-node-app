@@ -21,6 +21,7 @@
                     <li class="sub-link active"><a href="#">Migrations</a></li>
                     <li class="sub-link"><a href="#">Jira</a></li>
                     <li class="sub-link"><a href="#">Storage</a></li>
+                    <li class="sub-link"><a href="#">APIs</a></li>
                     <li class="sub-link"><a href="#">Documentation</a></li>
                     <li class="sub-link"><a href="#">Support</a></li>
                 </ul>
@@ -41,7 +42,7 @@
                 <% migrations.forEach(migration => {%>
                     <li class="card">
     
-                        <a class="mig-link" href="#"><%= migration %></a>
+                        <a class="mig-link" href="/<%= username %>/<%= migration %>"><%= migration %></a>
                         
                     </li>
                 <%})%>
