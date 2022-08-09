@@ -8,6 +8,9 @@
     <title>Home</title>
 </head>
 <body>
+    <% messages.forEach(message =>{%>
+        <%= message %>
+    <%})%>
     <div class="scene">
         <div class="card"> 
             <form action="/login" method="POST" class="form__face--front form-face">

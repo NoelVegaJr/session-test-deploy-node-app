@@ -3,6 +3,7 @@ const app = express();
 const port = 5500;
 const bodyParser = require('body-parser')
 const bcrypt = require('bcrypt');
+const flash = require('connect-flash');
 
 
 app.set('view engine', 'ejs')
@@ -54,6 +55,7 @@ app.use(session({
         expires: 60000 * 60 * 4
     }
 }));
+app.use(flash());
 
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -62,12 +64,14 @@ app.use(bodyParser.urlencoded({extended: true}));
 // routes
 
 app.get('/', isAuth, (req, res) => {
+    
     res.render('index');
 });
 
 
 app.get('/login', (req, res) => {
-    res.render('login');
+    
+    res.render('login', {messages: req.flash('info')});
 });
 
 app.post('/login', async (req, res) => {
@@ -79,8 +83,9 @@ app.post('/login', async (req, res) => {
     if(!isMatch) return res.redirect('login');
 
     req.session.isAuth = true;
+    req.session.username = user.username;
 
-    res.redirect('dashboard');
+    res.redirect('/'+user.username);
 });
 
 app.get('/register', (req, res) => {
@@ -99,8 +104,11 @@ app.post('/register', async (req, res) => {
     });
     await user.save();
 
+    
     res.redirect('login');
 });
+
+
 
 
 app.get('/dashboard', isAuth, (req, res) => {
@@ -114,6 +122,13 @@ app.post('/logout', (req, res) => {
     });
 });
 
+app.get('/:user', isAuth, async (req, res) => {
+    
+    const username = req.session.username;
+    if(req.params.user !== username ) return res.sendStatus(401);
+    const user = await UserModel.findOne({username});
+    res.render('user', {migrations: user.migrations, username: username});
+});
 
 
 app.listen(process.env.PORT || port, () => {

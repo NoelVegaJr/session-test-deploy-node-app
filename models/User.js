@@ -16,6 +16,10 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
+    migrations: {
+        type: Array,
+        default: []
+    },
     active: {
         type: Boolean,
         default: false
