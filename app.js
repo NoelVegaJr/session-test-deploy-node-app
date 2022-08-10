@@ -26,6 +26,7 @@ mongooseConnection(mongoURI);
 
 // schemas
 const UserModel = require('./models/User');
+const MigrationModel = require('./models/Migration');
 
 
 // sessions
@@ -58,6 +59,7 @@ app.use(session({
 app.use(flash());
 
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.json())
 
 
 
@@ -123,21 +125,64 @@ app.post('/logout', (req, res) => {
     });
 });
 
+app.get('/api/migration/:migration', async (req, res) => {
+    const migrationName = req.params.migration;
+    const migration = await MigrationModel.findOne({migrationName})
+
+    res.json(migration);
+});
+
+
+
+app.post('/api/migration/:migration', async (req, res) => {
+    const migrationName = req.params.migration;
+    console.log(req.body);
+    const {discovered, incomplete, skipped, failed, complete, gb} = req.body;
+    console.log(`Updating totals for ${migrationName}`);
+
+    await MigrationModel.updateOne({migrationName}, {
+        totals: {
+            discovered,
+            incomplete,
+            skipped,
+            failed,
+            complete,
+            gb
+        }
+    });
+
+    res.send('updated');
+});
+
+
 app.get('/:user', isAuth, async (req, res) => {
     
     const username = req.session.username;
     if(req.params.user !== username ) return res.sendStatus(401);
-    const user = await UserModel.findOne({username});
-    res.render('user', {migrations: user.migrations, username: username});
+
+    let userMigrationNames = await UserModel.findOne({username}, 'migrations');
+    let migrations = []
+    for (const migrationName of userMigrationNames.migrations){
+        migrations.push(await MigrationModel.findOne({migrationName}, ['client', 'name', 'source', 'destination']));
+    }
+
+    res.render('user', {migrations: migrations, username: username});
 });
 
 app.get('/:user/:migration', isAuth, async (req, res) => {
     
     const username = req.session.username;
-    const migration = req.params.migration;
     if(req.params.user !== username ) return res.sendStatus(401);
+
+    const migrationName = req.params.migration;
+    const migration = await MigrationModel.findOne({migrationName}, ['client', 'name', 'source', 'destination','totals']);
+
+
     res.render('migration', {migration: migration, username: username});
 });
+
+
+// APIs
 
 
 app.listen(process.env.PORT || port, () => {

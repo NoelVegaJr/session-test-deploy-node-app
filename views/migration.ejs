@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/user.css"/>
     <link rel="stylesheet" href="/css/migration.css"/>
-    <title><%= migration %></title>
+    <title><%= migration.client %></title>
 </head>
 <body>
     <nav>
@@ -17,7 +17,7 @@
     <section class="section-sub-nav">
         <div class="container">
             <div class="bread-crumb">
-                <a href="/<%= username %>"><%= username %></a> / <a class="active-crumb" href="#"><%= migration %></a>
+                <a href="/<%= username %>"><%= username %></a> / <a class="active-crumb" href="#"><%= migration.client %></a>
             </div>
             <div class="sub-nav">
                 <div class="cell"></div>
@@ -31,8 +31,33 @@
             </div>
         </div>
     </section>
+    <div class="container">
+        <table class="mig-table">
+            <thead>
+                <tr>
+                    <th>Discovered</th>
+                    <th>Incomplete</th>
+                    <th>Skipped</th>
+                    <th>Failed</th>
+                    <th>Complete</th>
+                    <th>GB</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><%= migration.totals.get('discovered') %></td>
+                    <td><%= migration.totals.get('incomplete') %></td>
+                    <td><%= migration.totals.get('skipped') %></td>
+                    <td><%= migration.totals.get('failed') %></td>
+                    <td><%= migration.totals.get('complete') %></td>
+                    <td><%= migration.totals.get('gb') %></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
 
-    
+
+    <script src="/js/first.js"></script>
 </body>
 </html>

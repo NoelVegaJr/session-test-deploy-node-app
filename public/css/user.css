@@ -159,13 +159,31 @@ ol {
     
 }
 
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
 .mig-link {
     color: #0969da;
     font-weight: bold;
     text-decoration: none;
     font-size: 1.8rem;
+    margin-bottom: 1rem;
+    display: inline-block;
 }
 
 .mig-link:hover {
     text-decoration: underline;
+}
+
+.mig-name {
+    font-size: 1.4rem;
 }

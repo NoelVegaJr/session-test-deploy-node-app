@@ -41,8 +41,9 @@
             <ol>
                 <% migrations.forEach(migration => {%>
                     <li class="card">
-    
-                        <a class="mig-link" href="/<%= username %>/<%= migration %>"><%= migration %></a>
+                        <a class="mig-link" href="/<%= username %>/<%= migration.client %>"><%= migration.client %></a>
+                        
+                        <p class="mig-name"><%= migration.name %></p>
                         
                     </li>
                 <%})%>
@@ -53,6 +54,6 @@
     </div>
 
 
-    
+    <script src="/js/first.js"></script>
 </body>
 </html>
