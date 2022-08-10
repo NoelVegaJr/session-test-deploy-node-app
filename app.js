@@ -136,7 +136,6 @@ app.get('/api/migration/:migration', async (req, res) => {
 
 app.post('/api/migration/:migration', async (req, res) => {
     const migrationName = req.params.migration;
-    console.log(req.body);
     const {discovered, incomplete, skipped, failed, complete, gb} = req.body;
     console.log(`Updating totals for ${migrationName}`);
 
