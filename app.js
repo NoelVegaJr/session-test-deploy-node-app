@@ -159,12 +159,13 @@ app.get('/:user', isAuth, async (req, res) => {
     const username = req.session.username;
     if(req.params.user !== username ) return res.sendStatus(401);
 
-    let userMigrationNames = await UserModel.findOne({username}, 'migrations');
+    let clients = await UserModel.findOne({username}, 'migrations');
+    console.log(clients)
     let migrations = []
-    for (const migrationName of userMigrationNames.migrations){
-        migrations.push(await MigrationModel.findOne({migrationName}, ['client', 'name', 'source', 'destination']));
+    for (const client of clients.migrations){
+        migrations.push(await MigrationModel.findOne({client}, ['client', 'name', 'source', 'destination']));
     }
-
+    
     res.render('user', {migrations: migrations, username: username});
 });
 
@@ -173,11 +174,31 @@ app.get('/:user/:migration', isAuth, async (req, res) => {
     const username = req.session.username;
     if(req.params.user !== username ) return res.sendStatus(401);
 
-    const migrationName = req.params.migration;
-    const migration = await MigrationModel.findOne({migrationName}, ['client', 'name', 'source', 'destination','totals']);
+    const client = req.params.migration;
+    const doc = await MigrationModel.findOne({client});//, ['client', 'name', 'source', 'destination','totals']
+    const migration = doc.toJSON();
+    console.log(migration);
+    console.log(migration.databases[0].stats.discovered);
+    const totals = {
+        discovered: 0,
+        incomplete: 0,
+        skipped: 0,
+        failed: 0,
+        complete: 0,
+        gb: 0
 
-
-    res.render('migration', {migration: migration, username: username});
+    }
+    migration.databases.forEach(database => {
+        totals.discovered += database.stats.discovered
+        totals.incomplete += database.stats.incomplete
+        totals.skipped += database.stats.skipped
+        totals.failed += database.stats.failed
+        totals.complete += database.stats.complete
+        totals.gb += database.stats.gb
+    })
+    console.log(totals)
+    //res.json(migration)
+    res.render('migration', {totals: totals, migration: migration, username: username});
 });
 
 

@@ -31,30 +31,268 @@
             </div>
         </div>
     </section>
-    <div class="container">
-        <table class="mig-table">
-            <thead>
-                <tr>
-                    <th>Discovered</th>
-                    <th>Incomplete</th>
-                    <th>Skipped</th>
-                    <th>Failed</th>
-                    <th>Complete</th>
-                    <th>GB</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><%= migration.totals.get('discovered') %></td>
-                    <td><%= migration.totals.get('incomplete') %></td>
-                    <td><%= migration.totals.get('skipped') %></td>
-                    <td><%= migration.totals.get('failed') %></td>
-                    <td><%= migration.totals.get('complete') %></td>
-                    <td><%= migration.totals.get('gb') %></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <section class="section-metrics">
+        <div class="container">
+            <button class="export-report-btn">Export</button>
+    
+            <table class="totals-table">
+                <caption>Overall Metrics</caption>
+                <thead>
+                    <tr>
+                        <th>Discovered</th>
+                        <th>Incomplete</th>
+                        <th>Skipped</th>
+                        <th>Failed</th>
+                        <th>Complete</th>
+                        <th>GB</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><%= totals.discovered.toLocaleString("en-US") %></td>
+                        <td><%= totals.incomplete.toLocaleString("en-US") %></td>
+                        <td><%= totals.skipped.toLocaleString("en-US") %></td>
+                        <td><%= totals.failed.toLocaleString("en-US") %></td>
+                        <td><%= totals.complete.toLocaleString("en-US") %></td>
+                        <td><%= totals.gb.toLocaleString("en-US") %></td>
+                    </tr>
+     
+                </tbody>
+            </table>
+    
+            <table class="database-table">
+                <caption>Database Metrics</caption>
+                <thead>
+                    <tr>
+                        <th>Server</th>
+                        <th>Database</th>
+                        <th>Discovered</th>
+                        <th>Incomplete</th>
+                        <th>Skipped</th>
+                        <th>Failed</th>
+                        <th>Complete</th>
+                        <th>GB</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% migration.databases.forEach(database => {%>
+                        <tr>
+                            <td><%= database.server %></td>
+                            <td><%= database.name %></td>
+                            <td><%= database.stats.discovered.toLocaleString("en-US") %></td>
+                            <td><%= database.stats.incomplete.toLocaleString("en-US") %></td>
+                            <td><%= database.stats.skipped.toLocaleString("en-US") %></td>
+                            <td><%= database.stats.failed.toLocaleString("en-US") %></td>
+                            <td><%= database.stats.complete.toLocaleString("en-US") %></td>
+                            <td><%= database.stats.gb.toLocaleString("en-US") %></td>
+                        </tr>
+                    <%})%>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    
+    <section class="section-servers">
+        <div class="container">
+            <div class="server-card">
+                <p class="server-title">Server 1</p>
+                <div class="server-info">
+                    <div class="info">
+                        <table class="console-info">
+                            <thead>
+                                <tr>
+                                    <th>State</th>
+                                    <th>Consoles</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Active</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>Closed</td>
+                                    <td>0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="storage">
+                        <img class="storage-img" src="/images/storage-resources.png"/>
+                    </div>
+                    <div class="usage">
+                        <img class="usage-img" src="/images/cpu-resources.png"/>
+                        <img class="usage-img" src="/images/memory-resources.png"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="server-card">
+                <p class="server-title">Server 2</p>
+                <div class="server-info">
+                    <div class="info">
+                        <table class="console-info">
+                            <thead>
+                                <tr>
+                                    <th>State</th>
+                                    <th>Consoles</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Active</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>Closed</td>
+                                    <td>0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="storage">
+                        <img class="storage-img" src="/images/storage-resources.png"/>
+                    </div>
+                    <div class="usage">
+                        <img class="usage-img" src="/images/cpu-resources.png"/>
+                        <img class="usage-img" src="/images/memory-resources.png"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="server-card">
+                <p class="server-title">Server 3</p>
+                <div class="server-info">
+                    <div class="info">
+                        <table class="console-info">
+                            <thead>
+                                <tr>
+                                    <th>State</th>
+                                    <th>Consoles</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Active</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>Closed</td>
+                                    <td>0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="storage">
+                        <img class="storage-img" src="/images/storage-resources.png"/>
+                    </div>
+                    <div class="usage">
+                        <img class="usage-img" src="/images/cpu-resources.png"/>
+                        <img class="usage-img" src="/images/memory-resources.png"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="server-card">
+                <p class="server-title">Server 4</p>
+                <div class="server-info">
+                    <div class="info">
+                        <table class="console-info">
+                            <thead>
+                                <tr>
+                                    <th>State</th>
+                                    <th>Consoles</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Active</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>Closed</td>
+                                    <td>0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="storage">
+                        <img class="storage-img" src="/images/storage-resources.png"/>
+                    </div>
+                    <div class="usage">
+                        <img class="usage-img" src="/images/cpu-resources.png"/>
+                        <img class="usage-img" src="/images/memory-resources.png"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="server-card">
+                <p class="server-title">Server 5</p>
+                <div class="server-info">
+                    <div class="info">
+                        <table class="console-info">
+                            <thead>
+                                <tr>
+                                    <th>State</th>
+                                    <th>Consoles</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Active</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>Closed</td>
+                                    <td>0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="storage">
+                        <img class="storage-img" src="/images/storage-resources.png"/>
+                    </div>
+                    <div class="usage">
+                        <img class="usage-img" src="/images/cpu-resources.png"/>
+                        <img class="usage-img" src="/images/memory-resources.png"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="server-card">
+                <p class="server-title">Server 6</p>
+                <div class="server-info">
+                    <div class="info">
+                        <table class="console-info">
+                            <thead>
+                                <tr>
+                                    <th>State</th>
+                                    <th>Consoles</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Active</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>Closed</td>
+                                    <td>0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="storage">
+                        <img class="storage-img" src="/images/storage-resources.png"/>
+                    </div>
+                    <div class="usage">
+                        <img class="usage-img" src="/images/cpu-resources.png"/>
+                        <img class="usage-img" src="/images/memory-resources.png"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 
 
